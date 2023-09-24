@@ -215,6 +215,7 @@ create stacks max-stacks cells allot \ array of stacks
 256 constant max-registers
 create registers max-registers cells allot \ array of registers
 variable nregisters 0 nregisters ! \ number of registers
+0 value stack-cache-regs \ numer of data stack registers used for stack caching
 variable next-state-number 0 next-state-number ! \ next state number
 
 : stack-in-index ( in-size item -- in-index )
@@ -732,7 +733,8 @@ stack inst-stream IP Cell
 : make-register ( type addr u -- )
     \ define register with type TYPE and name ADDR U.
     nregisters @ max-registers < s" too many registers" ?print-error
-    2dup nextname create register% %allot dup
+    2dup nextname create here registers nregisters @ th !
+    register% %allot dup
     >r register-name 2!
     r@ register-type !
     nregisters @ r@ register-number !
@@ -843,6 +845,18 @@ stack inst-stream IP Cell
 : spill-state ( -- )
     ['] spill-stack map-stacks1 ;
 
+1 constant data-stack#
+
+: kill-regs ( -- )
+    \ kill stack-cache registers that are dead in state-out.  This
+    \ means that the C compiler does not consider these registers
+    \ alive in the primitive after the primitive last reads them;
+    \ particularly relevant for primitives with calls.  !! specific to
+    \ the simple stack-cache organization with only the data stack.
+    stack-cache-regs state-out state-sss data-stack# th @ ss-offset @ 1+ +do
+        ." KILL(" registers i th @ register-name 2@ type ." );" cr
+    loop ;
+
 : fill-stack-items { stack -- u }
     \ there are u items to fill in stack
     stack unused-stack-items
@@ -862,8 +876,11 @@ stack inst-stream IP Cell
     loop ;
 
 : fill-state ( -- )
+    \ load stack items if necessary
+    \ also kills stack-cache registers that are dead in state-out
     \ !! inst-stream for prefetching?
-    ['] fill-stack map-stacks1 ;
+    ['] fill-stack map-stacks1
+    kill-regs ;
 
 : fetch ( addr -- )
     dup item-type @ type-fetch @ execute ;
