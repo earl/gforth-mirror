@@ -196,6 +196,7 @@ static int no_dynamic=NO_DYNAMIC_DEFAULT; /* if true, no code is generated
 static int no_rc0=0;  /* true if don't load ~/.config/gforthrc0 */
 static int print_metrics=0; /* if true, print metrics on exit */
 static int print_prims=0; /* if true, print primitives on exit */
+static int print_nonreloc=0; /* if true, print non-relocatable prims */
 static int static_super_number = 10000; /* number of ss used if available */
 #define MAX_STATE 9 /* maximum number of states */
 #define CANONICAL_STATE 0
@@ -1076,6 +1077,8 @@ static void check_prims(Label symbols1[])
 #ifndef BURG_FORMAT
       debugp(stderr,"\n   non_reloc: no J label > start found\n");
 #endif
+      if (print_nonreloc)
+        printf("create %s\n",prim_names[i]);
       relocs--;
       nonrelocs++;
       continue;
@@ -1086,6 +1089,8 @@ static void check_prims(Label symbols1[])
 #ifndef BURG_FORMAT
       debugp(stderr,"\n   non_reloc: there is a J label before the K label (restlength<0)\n");
 #endif
+      if (print_nonreloc)
+        printf("create %s\n",prim_names[i]);
       relocs--;
       nonrelocs++;
       continue;
@@ -1096,6 +1101,8 @@ static void check_prims(Label symbols1[])
 #ifndef BURG_FORMAT
       debugp(stderr,"\n   non_reloc: K label before I label (length<0)\n");
 #endif
+      if (print_nonreloc)
+        printf("create %s\n",prim_names[i]);
       relocs--;
       nonrelocs++;
       continue;
@@ -1105,6 +1112,8 @@ static void check_prims(Label symbols1[])
       debugp(stderr,"\n   non_reloc: architecture specific check failed\n");
 #endif
       pi->start = NULL; /* not relocatable */
+      if (print_nonreloc)
+        printf("create %s\n",prim_names[i]);
       relocs--;
       nonrelocs++;
       continue;
@@ -1124,6 +1133,8 @@ static void check_prims(Label symbols1[])
 	debugp(stderr,"\n   non_reloc: engine1!=engine2 offset %3d",j);
 #endif
 	/* assert(j<prim_len); */
+        if (print_nonreloc)
+          printf("create %s\n",prim_names[i]);
 	relocs--;
 	nonrelocs++;
 	break;
@@ -2401,6 +2412,7 @@ int gforth_args(int argc, char ** argv, char ** path, char ** imagename)
       {"dynamic", no_argument, &no_dynamic, 0},
       {"code-block-size", required_argument, NULL, opt_code_block_size},
       {"print-metrics", no_argument, &print_metrics, 1},
+      {"print-nonreloc", no_argument, &print_nonreloc, 1},
       {"print-prims", no_argument, &print_prims, 1},
       {"print-sequences", no_argument, &print_sequences, 1},
       {"ss-number", required_argument, NULL, ss_number},
@@ -2476,6 +2488,7 @@ Engine Options:\n\
   --offset-image		    Load image at a different position\n\
   -p PATH, --path=PATH		    Search path for finding image and sources\n\
   --print-metrics		    Print some code generation metrics on exit\n\
+  --print-nonreloc		    Print non-relocatable primitives at start\n\
   --print-prims			    Print primitives with usage counts on exit\n\
   --print-sequences		    Print primitive sequences for optimization\n\
   -r SIZE, --return-stack-size=SIZE Specify return stack size\n\
