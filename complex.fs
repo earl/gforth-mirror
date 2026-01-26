@@ -71,7 +71,7 @@ also locals-types definitions
     \G Define varue-flavoured complex local @i{name} @code{( -- z1 )}
     addressable: z: ;
 
-: Z^ ( compilation "name" -- a-addr xt; run-time r1 r2 -- ) \ gforth f-caret
+: Z^ ( compilation "name" -- a-addr xt; run-time r1 r2 -- ) \ gforth z-caret
     \g Define local @i{name}, reserve two floats at @i{f-addr},
     \g and store @i{r1 r2} there.@*
     \g @i{name} execution: @i{( -- f-addr )}.@*
