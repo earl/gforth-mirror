@@ -14405,10 +14405,9 @@ E.g., a definition using @code{TO} might look like this:
 : strcmp {: addr1 u1 addr2 u2 -- n :}
  u1 u2 min 0 ?do
    addr1 c@ addr2 c@ - ?dup-if
-     unloop exit
-   then
-   addr1 char+ TO addr1
-   addr2 char+ TO addr2
+     unloop exit then
+   1 +TO addr1
+   1 +TO addr2
  loop
  u1 u2 - ;
 @end source
@@ -14425,15 +14424,14 @@ are initialized with the right value for the current iteration.
 : strcmp {: addr1 u1 addr2 u2 -- n :}
  addr1 addr2
  u1 u2 min 0 ?do {: s1 s2 :}
-   s1 c@ s2 c@ -
-   ?dup-if
-     unloop exit
-   then
+   s1 c@ s2 c@ - ?dup-if
+     unloop exit then
    s1 char+ s2 char+
  loop
  2drop
  u1 u2 - ;
 @end source
+
 Here it is clear from the start that @code{s1} has a different value
 in every loop iteration.
 
