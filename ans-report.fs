@@ -152,7 +152,7 @@ ans-report-words definitions
         dup cols 4 - >= if
             cr space drop len 1+
         endif
-        i @ .name
+        i @ id.
     cell +loop
     drop ;
 
@@ -162,13 +162,13 @@ also ans-report-words
 : print-ans-report ( -- )
     cr
     ." The program uses the following words" cr
-    [ get-order wordsets swap 1+ set-order ] [(')] core [ previous ]
+    [ get-order wordsets swap 1+ set-order ] ``core [ previous ]
     begin
 	dup 0<>
     while
-	dup >r name>int >body dup @ swap cell+ 2@ dup
+	dup >r name>interpret >body dup @ swap cell+ 2@ dup
 	if
-	    ." from " r@ .name ." :" cr
+	    ." from " r@ id. ." :" cr
 	    bounds print-names cr
 	else
 	    2drop
