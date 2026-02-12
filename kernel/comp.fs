@@ -142,7 +142,9 @@ variable next-prelude
     replace-sourceview current-sourceview over select ;
 
 Defer check-shadow ( addr u wid -- )
-:noname drop 2drop ; is check-shadow
+: no-check-shadow ( addr u wid -- )
+    drop 2drop ;
+' no-check-shadow is check-shadow
 
 :noname drop lastnt @ ;
 ' noop Alias recurse ( ... -- ... ) \ core

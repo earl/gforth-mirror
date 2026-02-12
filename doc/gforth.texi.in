@@ -19170,6 +19170,9 @@ been removed in Forth-2012).
 
 @subsection Caveats
 
+Loading @file{ans-report.fs} disables the reporting of shadowed words
+(a quick fix to avoid recording the shadowed words as being used).
+
 Note that @file{ans-report.fs} just checks which words are used, not
 whether they are used in a standard-conforming way!
 

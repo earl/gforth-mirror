@@ -67,9 +67,9 @@ wordset FACILITY-EXT-2012
 wordset FILE
 wordset FILE-EXT
 wordset FILE-EXT-2012
-wordset FLOAT
-wordset FLOAT-EXT
-wordset FLOAT-EXT-2012
+wordset FLOATING
+wordset FLOATING-EXT
+wordset FLOATING-EXT-2012
 wordset LOCAL
 wordset LOCAL-EXT
 wordset LOCAL-EXT-2012
@@ -112,6 +112,7 @@ ans-report-words definitions
 
 : add-unless-present ( nt addr -- )
     \ add nt to array described by addr 2@, unless it contains nt
+    dup [ wordsets >order ] non-ans [ previous ] cell+ = if then
     >r ( nt )
     r@ 2@ bounds
     u+do ( nt )
@@ -128,9 +129,9 @@ ans-report-words definitions
 : note-name ( nt -- )
     \ remember name in the appropriate wordset, unless already there
     \ or the word is defined in the checked program
-    dup [ here ]L forthstart within
+    dup ['] ans-report-words forthstart within
     if
-	drop EXIT
+        drop EXIT
     endif
     sp@ cell answords search-wordlist ( nt xt true | nt false )
     if \ ans word
@@ -175,6 +176,9 @@ also ans-report-words
 	rdrop
     repeat
     drop ;
+
+' no-check-shadow is check-shadow
+\ otherwise shadowed words are reported as being used
 
 `hash-note-rec `hash-rec previous replace-word
 

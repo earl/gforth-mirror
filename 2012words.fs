@@ -66,14 +66,14 @@ xword include file-ext-2012
 xword require file-ext-2012
 xword required file-ext-2012
 
-xword dffield: float-ext-2012
-xword f>s float-ext-2012
-xword ffield: float-ext-2012
-xword ftrunc float-ext-2012
-xword fvalue float-ext-2012
-xword s>f float-ext-2012
-xword sffield: float-ext-2012
-xword ffield: float-ext-2012
+xword dffield: floating-ext-2012
+xword f>s floating-ext-2012
+xword ffield: floating-ext-2012
+xword ftrunc floating-ext-2012
+xword fvalue floating-ext-2012
+xword s>f floating-ext-2012
+xword sffield: floating-ext-2012
+xword ffield: floating-ext-2012
 
 xword {: local-ext-2012
 
