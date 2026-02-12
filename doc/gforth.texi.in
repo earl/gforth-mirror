@@ -14358,8 +14358,8 @@ it does not produce the value that an infinite-lifetime local would
 have at the place where the local is compiled into by the
 @word{postpone} (what a Scheme programmer would expect).  However, as
 long as you do not use @word{TO}, @word{+TO}, @word{IS} or @word{ADDR}
-and @word{POSTPONE} on the same local, postponing a local produces the
-result that a Scheme programmer would expect.
+on the same local as @word{POSTPONE}, the latter produces the result
+that a Scheme programmer would expect.
 
 Concerning using locals without @word{TO} and friends, @pxref{Locals
 programming style}.
@@ -14393,10 +14393,10 @@ programmers continue to honour the principle of factoring instead of
 using the added latitude to make the words longer.
 
 @cindex single-assignment style for locals
-Using @code{TO} can and should be avoided.  Without @code{TO},
-every value-flavoured local has only a single assignment and many
-advantages of functional languages apply to Forth. I.e., programs are
-easier to analyse, to optimize and to read: It is clear from the
+Using @code{TO} can and should be avoided.  Without @code{TO} and
+friends, every value-flavoured local has only a single assignment and
+many advantages of functional languages apply to Forth. I.e., programs
+are easier to analyse, to optimize and to read: It is clear from the
 definition what the local stands for, it does not turn into something
 different later.
 
@@ -14411,12 +14411,12 @@ E.g., a definition using @code{TO} might look like this:
  loop
  u1 u2 - ;
 @end source
-Here, @code{TO} is used to update @code{addr1} and @code{addr2} at
+Here, @code{+TO} is used to update @code{addr1} and @code{addr2} at
 every loop iteration. @code{strcmp} is a typical example of the
-readability problems of using @code{TO}. When you start reading
-@code{strcmp}, you think that @code{addr1} refers to the start of the
-string. Only near the end of the loop you realize that it is something
-else.
+readability problems of using @code{TO} and friends: When you read the
+use of, e.g., @code{addr1} near the start of the loop, you think that
+@code{addr1} refers to the start of the string. Only near the end of
+the loop you realize that it is something else.
 
 This can be avoided by defining two locals at the start of the loop that
 are initialized with the right value for the current iteration.
