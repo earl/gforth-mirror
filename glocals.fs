@@ -510,24 +510,23 @@ previous
     ['] new-locals ['] rec-forth defer@ >stack
     ['] locals >wordlist set-current
     val-part off
-    0 postpone [ ; immediate
+    state @ 0 postpone [ ; immediate
 
-synonym {: { ( -- hmaddr u wid 0 ) \ local-ext open-brace-colon
+synonym {: { ( -- hmaddr u wid state 0 ) \ local-ext open-brace-colon
 \G Start locals definitions.
 
 locals-types definitions
 
-: } ( hmaddr u wid 0 xt1 ... xtn -- ) \ gforth close-brace
+: } ( hmaddr u wid state 0 xt1 ... xtn -- ) \ gforth close-brace
     \G Ends locals definitions.  The Forth-2012 standard name for this
     \G word is @code{:@}}.
-    ]
     ['] rec-forth defer@ stack> drop
     begin
 	dup
     while
 	execute
     repeat
-    drop hm,
+    drop state ! hm,
     maxalign-lp
     set-current
     hmrestore

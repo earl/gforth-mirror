@@ -647,6 +647,10 @@ Defer before-line ( -- ) \ gforth
 \G Deferred word called before the text interpreter parses the next line
 ' noop IS before-line
 
+Defer after-line ( -- ) \ gforth
+\G Deferred word called after the text interpreter parsed a line
+' noop IS after-line
+
 defer int-execute ( ... xt -- ... )
 \ like EXECUTE, but restores and saves ERRNO if present
 ' execute IS int-execute
@@ -655,13 +659,14 @@ defer int-execute ( ... xt -- ... )
     \ interpret/compile the (rest of the) input buffer
     [ cell 4 = [IF] ] false >l [ [THEN] ] \ align LP stack for 32 bit engine
     r> >l rp@ backtrace-rp0 !
-    [ has? EC 0= [IF] ] before-line [ [THEN] ]
+    before-line
     BEGIN
-	?stack [ has? EC 0= [IF] ] before-word [ [THEN] ] parse-name dup
+	?stack before-word parse-name dup
     WHILE
 	rec-forth ?rec-found execute
     REPEAT
-    2drop @local0 >r lp+ ;
+    2drop after-line
+    @local0 >r lp+ ;
 
 : bt-rp0-catch ( ... xt -- ... ball )
     backtrace-rp0 @ >r	
