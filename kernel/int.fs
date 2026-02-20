@@ -478,6 +478,10 @@ defer compile, ( xt -- ) \ core-ext compile-comma
     \G Reserve data space for one cell and store @i{w} in the space.
     cell small-allot ! ;
 
+: mask? ( nt mask -- flag ) \ gforth-internal
+    \G check if there is a flag, and if so, if it is set
+    swap name>string + ?dup-IF  @  THEN  and 0<> ;
+
 : immediate? ( nt -- flag ) \ gforth
     \G true if the word @i{nt} has non-default compilation
     \G semantics (that's not quite according to the definition of
@@ -486,7 +490,7 @@ defer compile, ( xt -- ) \ core-ext compile-comma
     name>compile nip ['] compile, <> ;
 : compile-only? ( nt -- flag ) \ gforth
     \G true if @i{nt} is marked as compile-only.
-    >f+c @ restrict-mask and 0<> ;
+    restrict-mask mask? ;
 : ?compile-only ( nt -- nt )
     dup compile-only? IF
 	<<# s"  is compile-only" holds dup name>string holds #0. #>
@@ -495,7 +499,7 @@ defer compile, ( xt -- ) \ core-ext compile-comma
 : obsolete? ( nt -- flag ) \ gforth
     \G true if @i{nt} is obsolete, i.e., will be removed in a future
     \G version of Gforth.
-    >f+c @ obsolete-mask and 0<> ;
+    obsolete-mask mask? ;
 : ?obsolete ( nt -- nt )
     dup obsolete? warnings @ abs 1 > and IF
 	<<# s"  is obsolete" holds dup name>string holds #0. #>

@@ -35,25 +35,27 @@ obsolete-mask 2/ Constant parsing-mask \ gforth-experimental
 	    find-name ?dup-IF  make-latest parsing  THEN
     REPEAT 2drop ;
 
-parsing-words char : ' create variable constant value
+parsing-words char : :noname ' create variable constant value
 parsing-words 2variable 2value 2constant fvariable fvalue fconstant
 parsing-words varue fvarue 2varue
 parsing-words +field begin-structure cfield: wfield: lfield: xfield: field: 2field: ffield: sffield: dffield:
 parsing-words value: cvalue: wvalue: lvalue: scvalue: swvalue: slvalue: 2value:
 parsing-words fvalue: sfvalue: dfvalue: zvalue: $value: defer: value[]: $value[]:
 parsing-words timer: see locate where
+parsing-words [IF] [ELSE]
 
 $1000 buffer: one-shot-dict
 Variable one-shot-dp
 one-shot-dict one-shot-dp !
 
 : one-shot-interpret ( xt -- )
-    dpp @ >r  one-shot-dp dpp !  catch  r> dpp !  throw ;
+    dp @ >r  one-shot-dp @ dp !  catch
+    dp @ one-shot-dp !  r> dp !  throw ;
 
 : defer-finish ( -- ) \ gforth-experimental
     \G finish the current deferred execution buffer and execute it
     get-state `deferring = IF
-	[: ]] ;s ; [[ ;] one-shot-interpret execute
+	[: ]] exit ; [[ ;] one-shot-interpret execute
     THEN ;
 : defer-start ( -- ) \ gforth-experimental
     \G start new deferred line
@@ -75,8 +77,14 @@ translate-to          comp2defer
 translate-complex     comp2defer
 translate-env         comp2defer
 :noname ( ... nt -- .. )
-    dup >r ?obsolete name>compile one-shot-interpret
-    r> >f+c @ parsing-mask and IF  defer-finish defer-start  THEN ;
+    dup >r ?obsolete  name>compile
+    dup `execute = IF \ is immediate
+	r> parsing-mask mask? IF  2>r defer-finish defer-start 2r>  THEN
+	one-shot-interpret
+    ELSE
+	one-shot-interpret
+	r> parsing-mask mask? IF  defer-finish defer-start  THEN
+    THEN ;
 translate-name is deferring
 
 : deferred-forth ( -- ) \ gforth-experimental
