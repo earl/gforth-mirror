@@ -44,7 +44,7 @@ parsing-words +field begin-structure cfield: wfield: lfield: xfield: field: 2fie
 parsing-words value: cvalue: wvalue: lvalue: scvalue: swvalue: slvalue: 2value:
 parsing-words fvalue: sfvalue: dfvalue: zvalue: $value: defer: value[]: $value[]:
 parsing-words timer: see locate where
-parsing-words [IF] [ELSE] ] [
+parsing-words [IF] [ELSE] ] [ parse parse-name
 
 $1000 buffer: one-shot-dict
 Variable one-shot-dp
@@ -81,16 +81,16 @@ translate-env         comp2defer
 :noname ( ... nt -- .. )
     dup >r ?obsolete  name>compile
     r> parsing-mask mask? IF
-	drop `compile, one-shot-interpret defer-finish defer-start
+	drop `compile, one-shot-interpret after-line before-line
     ELSE
 	one-shot-interpret
     THEN ;
 translate-name is deferring
 
-: deferred-forth ( -- ) \ gforth-experimental
+: deferring-forth ( -- ) \ gforth-experimental
     \G enable deferred interpretation
     ['] defer-start is before-line
     ['] defer-finish is after-line ;
 
-: standard-forth ( -- ) \ gforth-experimental
-    ['] noop  dup is before-line is after-line ;
+: interpreting-forth ( -- ) \ gforth-experimental
+    ['] noop  dup is before-line is after-line ; parsing immediate
