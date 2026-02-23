@@ -94,3 +94,5 @@ translate-name is deferring
 
 : interpreting-forth ( -- ) \ gforth-experimental
     ['] noop  dup is before-line is after-line ; parsing immediate
+
+deferring-forth \ default on
