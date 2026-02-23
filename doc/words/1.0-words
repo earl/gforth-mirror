@@ -295,6 +295,7 @@ adjust-locals-size
 +after
 after-cs-pop
 after-l
+after-line
 after-locate
 [AGAIN]
 AGAIN
@@ -403,6 +404,9 @@ annotate-cov
 .ansi-cov#
 ANT_OK
 ANT_OPEN
+ANT_PWR_OFF
+ANT_PWR_ON
+ANT_PWR_UNK
 ANT_SHORT
 ANT_UNK
 any
@@ -2342,6 +2346,7 @@ gps_fix_t
 gps_fix_t-altHAE
 gps_fix_t-altitude
 gps_fix_t-altMSL
+gps_fix_t-ant_power
 gps_fix_t-ant_stat
 gps_fix_t-base
 gps_fix_t-climb
@@ -2369,6 +2374,9 @@ gps_fix_t-ept
 gps_fix_t-epv
 gps_fix_t-epx
 gps_fix_t-epy
+gps_fix_t-errEllipseMajor
+gps_fix_t-errEllipseMinor
+gps_fix_t-errEllipseOrient
 gps_fix_t-geoid_sep
 gps_fix_t-jam
 gps_fix_t-latitude
@@ -3513,6 +3521,7 @@ marker
 marker!
 marker,
 mark-start
+mask?
 mask-shift#
 max
 maxalign
@@ -3716,6 +3725,7 @@ NL_NOSOCKOPT
 no-</>
 nobuffer
 (nocheck-reveal)
+no-check-shadow
 ]nocov
 nocov[
 no.extensions
@@ -5299,6 +5309,8 @@ SHM_NOSHARED
 short~~
 shorten-file
 short-where
+sigid2obs
+sigid2str
 sign
 sign?
 simple-fkey-string
@@ -5377,6 +5389,7 @@ space
 spaces
 spaces-loop
 span
+SPARTN_SET
 spawn
 spawn1
 spawn2
@@ -6302,9 +6315,9 @@ z+!
 z-
 z.
 z/
-z:
 z@
-z^
+Z:
+Z^
 z0=
 z2*
 z2/
