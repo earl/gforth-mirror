@@ -493,7 +493,7 @@ w^ some-waddr 2drop
     2dup nextname
     + 1- c@ '[' = IF
 	['] rec-forth defer@ stack> >r
-	']' parse evaluate dfaligned
+	']' parse evaluate
 	r> ['] rec-forth defer@ >stack
 	[ r> ] Literal
     ELSE  ['] default: defer@  THEN  nt>rec ;
