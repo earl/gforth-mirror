@@ -480,7 +480,7 @@ defer compile, ( xt -- ) \ core-ext compile-comma
 
 : mask? ( nt mask -- flag ) \ gforth-internal
     \G check if there is a flag, and if so, if it is set
-    swap name>string + ?dup-IF  @  THEN  and 0<> ;
+    swap >f+c @ and 0<> ;
 
 : immediate? ( nt -- flag ) \ gforth
     \G true if the word @i{nt} has non-default compilation
