@@ -33,7 +33,7 @@ obsolete-mask 2/ Constant non-deferring-mask \ gforth-experimental
     \G mark existing words as non-deferring
     BEGIN  parse-name dup WHILE
 	    find-name ?dup-IF  make-latest non-deferring  THEN
-    REPEAT 2drop ;
+    REPEAT 2drop ; non-deferring
 
 \ non-deferring words are words that either parse or change the state
 
@@ -48,26 +48,26 @@ non-deferring-words value: cvalue: wvalue: lvalue: scvalue: swvalue: slvalue: 2v
 non-deferring-words fvalue: sfvalue: dfvalue: zvalue: $value: defer: value[]: $value[]:
 non-deferring-words timer: see locate where synonym alias marker cold bye
 non-deferring-words [IF] [ELSE] [defined] [undefined] [IFDEF] [IFUNDEF] ] parse parse-name
-non-deferring-word binary decimal hex set-precision interpret evaluate
+non-deferring-words binary decimal hex set-precision interpret evaluate
 
 $1000 buffer: one-shot-dict
 Variable one-shot-dp
 one-shot-dict one-shot-dp !
 
-: one-shot-interpret ( xt -- )
+: one-shot-interpret ( ... xt -- )
     dp @ >r  one-shot-dp @ dp !  catch
     dp @ one-shot-dp !  r> dp !  throw ;
 
-: defer-finish ( -- ) \ gforth-experimental
-    \G finish the current deferred execution buffer and execute it
-    get-state `deferring = IF
-	[: ]] exit ; [[ ;] one-shot-interpret execute
-    THEN ;
 : defer-start ( -- ) \ gforth-experimental
     \G start new deferred line
     get-state `interpreting = IF
 	[: one-shot-dict one-shot-dp ! :noname ;] one-shot-interpret
 	`deferring set-state
+    THEN ;
+: defer-finish ( -- ) \ gforth-experimental
+    \G finish the current deferred execution buffer and execute it
+    get-state `deferring = IF
+	[: ]] exit ; [[ ;] one-shot-interpret execute
     THEN ;
 
 : comp2defer ( translator -- )
