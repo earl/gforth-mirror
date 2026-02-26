@@ -21,30 +21,33 @@
 translate-method: deferring ( ... translation -- ... ) \ gforth-experimental
 \G compiling words found in quasi interpretation state into a temporary buffer
 
-obsolete-mask 2/ Constant parsing-mask \ gforth-experimental
-\G a parsing word breaks deferred compilation
+obsolete-mask 2/ Constant non-deferring-mask \ gforth-experimental
+\G a non-deferring word breaks deferred compilation
 
-: parsing ( -- ) \ gforth-experimental
-    \G Mark the last word as parsing.
-    \G Note that only non-immediate parsing words need this marker
-    parsing-mask lastflags or! ;
+: non-deferring ( -- ) \ gforth-experimental
+    \G Mark the last word as non-deferring.
+    \G Note that only non-immediate non-deferring words need this marker
+    non-deferring-mask lastflags or! ;
 
-: parsing-words ( "name1" .. "namex" -- ) \ gforth-experimental
-    \G mark existing words as parsing
+: non-deferring-words ( "name1" .. "namex" -- ) \ gforth-experimental
+    \G mark existing words as non-deferring
     BEGIN  parse-name dup WHILE
-	    find-name ?dup-IF  make-latest parsing  THEN
+	    find-name ?dup-IF  make-latest non-deferring  THEN
     REPEAT 2drop ;
 
-\ parsing words are words that either parse or change the state
+\ non-deferring words are words that either parse or change the state
 
-parsing-words char : :noname ' create variable constant value create-from noname-from [:
-parsing-words 2variable 2value 2constant fvariable fvalue fconstant
-parsing-words varue fvarue 2varue
-parsing-words +field begin-structure cfield: wfield: lfield: xfield: field: 2field: ffield: sffield: dffield:
-parsing-words value: cvalue: wvalue: lvalue: scvalue: swvalue: slvalue: 2value:
-parsing-words fvalue: sfvalue: dfvalue: zvalue: $value: defer: value[]: $value[]:
-parsing-words timer: see locate where
-parsing-words [IF] [ELSE] ] [ parse parse-name
+[: >voc dup xt? IF  make-latest non-deferring  ELSE  drop  THEN ;] map-vocs
+
+non-deferring-words set-order also only previous vocabulary
+non-deferring-words char : :noname ' create variable constant value create-from noname-from [:
+non-deferring-words 2variable 2value 2constant fvariable fvalue fconstant
+non-deferring-words varue fvarue 2varue
+non-deferring-words +field begin-structure cfield: wfield: lfield: xfield: field: 2field: ffield: sffield: dffield:
+non-deferring-words value: cvalue: wvalue: lvalue: scvalue: swvalue: slvalue: 2value:
+non-deferring-words fvalue: sfvalue: dfvalue: zvalue: $value: defer: value[]: $value[]:
+non-deferring-words timer: see locate where synonym alias marker cold bye
+non-deferring-words [IF] [ELSE] [defined] [undefined] [IFDEF] [IFUNDEF] ] parse parse-name
 
 $1000 buffer: one-shot-dict
 Variable one-shot-dp
@@ -80,7 +83,7 @@ translate-complex     comp2defer
 translate-env         comp2defer
 :noname ( ... nt -- .. )
     dup >r ?obsolete  name>compile
-    r> parsing-mask mask? IF
+    r> non-deferring-mask mask? IF
 	drop `compile, one-shot-interpret after-line before-line
     ELSE
 	one-shot-interpret
@@ -93,6 +96,6 @@ translate-name is deferring
     ['] defer-finish is after-line ;
 
 : interpreting-forth ( -- ) \ gforth-experimental
-    ['] noop  dup is before-line is after-line ; parsing immediate
+    ['] noop  dup is before-line is after-line ; non-deferring immediate
 
 deferring-forth \ default on
