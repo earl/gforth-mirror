@@ -17,6 +17,8 @@ All times are given in seconds of user time.
 After 0.7.0:
 AMD64:
  sieve bubble matrix fib   fft  release; CPU; gcc
+ 0.017 0.028  0.008 0.023 0.009 20260722; Core Ultra 225 P-core 4900MHz; gcc-14
+ 0.022 0.018  0.010 0.028 0.011 20260722; Core Ultra 225 E-core 4400MHz; gcc-14
  0.020 0.021  0.012 0.027 0.015 20250115; AMD Ryzen 8700G 5000MHz; gcc-12.2.0
  0.025 0.023  0.012 0.032 0.016 20250115; AMD Ryzen 5800X 4800MHz; gcc-10.2.1
  0.027 0.033  0.011 0.043 0.017 20250115; Golden Cove 3.8GHz (Core i3-1315U); gcc-10.2.1
