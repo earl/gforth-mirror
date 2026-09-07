@@ -20,8 +20,10 @@
   along with this program; if not, see http://www.gnu.org/licenses/.
 */
 
+/*
 #define BFD_ARCH bfd_arch_i386
 #define BFD_MACH bfd_mach_x86_64
+*/
 
 #if !defined(USE_TOS) && !defined(USE_NO_TOS)
 #define USE_TOS
