@@ -708,6 +708,9 @@ Dynamic Code generation disabled (relocation and delay slot issues).]"
 	tile*)
 		machine=tile
 		;;
+	s390*)
+		machine=s390
+		;;
 	*)
 		AC_MSG_WARN([Using a generic machine description])
 		AC_MSG_WARN([Assuming C floats and doubles are IEEE floats and doubles (for SF@ DF@ SF! DF!)])

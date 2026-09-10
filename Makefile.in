@@ -196,14 +196,12 @@ STACK_CACHE_DEFAULT_FAST = @STACK_CACHE_DEFAULT_FAST@
 PROFOBJS = @PROFOBJS@
 PROFEXES = @PROFEXES@
 
-INSTALLDIRS = kernel kernel-ec doc asm ec f test test/fp \
-	compat unix minos2 minos2/unicode minos2/tutorial \
-	arch arch/generic arch/m68k arch/mips \
-	arch/386 arch/hppa arch/sparc arch/power \
-	arch/alpha arch/4stack arch/misc arch/6502 \
-	arch/8086 arch/avr arch/c165 arch/h8 \
-	arch/shboom arch/sharc arch/ia64 arch/amd64 \
-	arch/arm arch/arm64 arch/r8c arch/lm32 arch/riscv arch/loongarch64
+INSTALLDIRS = kernel kernel-ec doc asm ec f test test/fp compat unix minos2  \
+	minos2/unicode minos2/tutorial arch arch/generic arch/m68k arch/mips \
+	arch/386 arch/hppa arch/sparc arch/power arch/alpha arch/4stack	     \
+	arch/misc arch/6502 arch/8086 arch/avr arch/c165 arch/h8 arch/shboom \
+	arch/sharc arch/ia64 arch/amd64 arch/arm arch/arm64 arch/r8c	     \
+	arch/lm32 arch/riscv arch/loongarch64 arch/s390
 INSTALL_LIBDIRS = unix
 
 INCLUDES = engine/forth.h engine/threaded.h engine/io.h engine/longlong.h \
@@ -639,6 +637,7 @@ ARCHS =	\
 	arch/loongarch64/asm.fs \
 	arch/loongarch64/disasm.fs \
 	arch/loongarch64/insts.fs \
+	arch/s390/machine.h \
 	engine/arm64-cacheflush.c \
 	engine/arm-cacheflush0.c \
 	engine/arm-cacheflush-linux.c \
