@@ -18,7 +18,13 @@ format, in seconds of CPU time for the old output format.
 
 After 2026-08-24 (new output format, all architectures in one list):
   sieve bubble matrix    fib    fft
-   20.1   21.2   11.8   27.2   12.9 20260819; Ryzen 8700G (Zen 4) 5000MHz; gcc-12.2
+   16.8   18.2    8.9   23.4   11.6 20260910; Ryzen AI Pro 350 (Zen 5) 4900MHz; gcc-15.2
+   20.3   21.4   11.6   31.1   12.7 20260910; Ryzen 8700G (Zen 4) 4939MHz; gcc-12.2
+   17.5   25.8    8.1   23.0    8.9 20260910; Core Ultra 5 225 P 4862MHz; gcc-14.2
+   22.7   18.0   12.6   27.7   10.1 20260910; Core Ultra 5 225 E 4390MHz; gcc-14.2
+   36.5   31.5   13.9   19.7   11.6 20260910; Apple M4 Pro default (P?); gcc-16.1
+   55.1   41.2   27.4   38.3   18.3 20260910; Apple M1 default (Firestorm?); gcc-16.1
+  104.5   99.8   50.1  102.2   49.0 20260910; Apple M1 taskpolicy -b (Icestorm?); gcc-16.1
 
 After 2026-01-27 (new output format, all architectures in one list):
  sieve  bubble matrix fib    fft    release; CPU; gcc
