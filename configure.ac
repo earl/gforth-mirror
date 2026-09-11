@@ -1534,19 +1534,22 @@ AC_CHECK_LIB(rt,clock_gettime)
 
 # Checks for libopcodes
 
-LD_VERSION=`$LD -v | tr ' ' '\n' | $GNU_TAIL -n 1`
-LD_VER1=`echo $LD_VERSION | cut -f1-3 -d.`
-LD_VER2=`echo $LD_VERSION | cut -f4 -d.`
 LIBOPCODES=""
 disasm2_fs=""
 disasm2_la=""
-old_LIBS="$LIBS"
-old_LDFLAGS="$LDFLAGS"
-# the following 2 lines (and reset below) make sure that a shared library is
-#  searched, because we use libcc to link to libopcodes
-old_CC="$CC"
-CC="$CC -fPIC -shared -Wl,--no-undefined"
-AC_SEARCH_LIBS([init_disassemble_info],[opcodes_pic opcodes-$LD_VERSION-system opcodes-$LD_VER1-system.$LD_VER2 opcodes-$LD_VERSION-multiarch opcodes-$LD_VER1-multiarch.$LD_VER2 opcodes-$LD_VERSION opcodes],
+
+if test "x$machine" != xgeneric
+then
+   LD_VERSION=`$LD -v | tr ' ' '\n' | $GNU_TAIL -n 1`
+   LD_VER1=`echo $LD_VERSION | cut -f1-3 -d.`
+   LD_VER2=`echo $LD_VERSION | cut -f4 -d.`
+   old_LIBS="$LIBS"
+   old_LDFLAGS="$LDFLAGS"
+   # the following 2 lines (and reset below) make sure that a shared library is
+   #  searched, because we use libcc to link to libopcodes
+   old_CC="$CC"
+   CC="$CC -fPIC -shared -Wl,--no-undefined"
+   AC_SEARCH_LIBS([init_disassemble_info],[opcodes_pic opcodes-$LD_VERSION-system opcodes-$LD_VER1-system.$LD_VER2 opcodes-$LD_VERSION-multiarch opcodes-$LD_VER1-multiarch.$LD_VER2 opcodes-$LD_VERSION opcodes],
 	        [AC_CHECK_HEADER(dis-asm.h,[LIBOPCODES=$ac_cv_search_init_disassemble_info
 disasm2_fs=unix/disasm2.fs
 disasm2_la='$(buildccdir)/libgfdisasm2.la'
@@ -1555,9 +1558,10 @@ disasm2_la='$(buildccdir)/libgfdisasm2.la'
 dis-asm.h not available, using fallback disassembler"])],
                 [config_warns="$config_warns
 libopcodes missing or not useable, using fallback disassembler"])
-CC="$old_CC"
-LDFLAGS="$old_LDFLAGS"
-LIBS="$old_LIBS"
+   CC="$old_CC"
+   LDFLAGS="$old_LDFLAGS"
+   LIBS="$old_LIBS"
+fi
 AC_SUBST(LIBOPCODES) # for separating disasm.c out of the binary
 AC_SUBST(disasm2_fs)
 AC_SUBST(disasm2_la)
