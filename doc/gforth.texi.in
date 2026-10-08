@@ -5872,6 +5872,7 @@ Arithmetics:
 doc-f+
 doc-f-
 doc-f*
+doc-f*+
 doc-f/
 doc-fnegate
 doc-fabs

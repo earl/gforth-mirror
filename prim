@@ -2702,6 +2702,13 @@ r3 = r1-r2;
 f*	( r1 r2 -- r3 )	floating	f_star
 r3 = r1*r2;
 
+f*+     ( r1 r2 r3 -- r ) gforth        f_star_plus
+""@i{r=r1+r2*r3}, on some platforms with fewer rounding errors than @code{f* f+}).""
+/* stack effect compatible with iForth and width F* F+ */
+/* for AMD64 use -march=x86-64-v3 to actually use an fma instruction */
+r=r1+r2*r3;
+/* the following results in a call to a library function: r=fma(r2,r3,r1); */
+
 f/	( r1 r2 -- r3 )	floating	f_slash
 r3 = r1/r2;
 

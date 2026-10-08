@@ -148,7 +148,7 @@ Goals](https://net2o.de/gforth-1.0/Stability-Goals.html).
   * Bitwise operations: `mux arshift dlshift drshift darshift >pow2
     log2 pow2?  ctz wrol wror lrol lror rol ror drol dror`
   * Pseudo-random numbers: `rnd random seed!`
-  * Floating-point: `s>f f>s fcopysign ftrunc v* faxpy infinity inf
+  * Floating-point: `f*+ s>f f>s fcopysign ftrunc v* faxpy infinity inf
     -infinity -inf nan`
 
 * Stack Manipulation:
