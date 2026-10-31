@@ -1,8 +1,5 @@
 # Gforth README
 
-[![pipeline status](https://gitlab.com/forthy42/gforth/badges/master/pipeline.svg)](https://gitlab.com/forthy42/gforth/commits/master)
-[![pipeline status](https://git.net2o.de/bernd/gforth/badges/master/pipeline.svg)](https://git.net2o.de/bernd/gforth/commits/master)
-
 Gforth is a fast and portable implementation of Forth-2012. It works
 nicely with the Emacs editor, offers some nice features such as input
 completion and history, backtraces, a decompiler and a powerful locals
@@ -28,9 +25,10 @@ as a package to the Forth Net: [https://theforth.net](https://theforth.net)
 
 ## Supported Systems
 
-Gforth runs under GNU, BSD, and similar systems, MS Windows through WSL and
-MacOS X and should not be hard to port to other systems supported by GCC. This
-version has been tested successfully on the following architectures:
+Gforth runs under GNU, BSD, MacOS, Android and similar systems on a
+number of architectures, and should not be hard to port to Unix-like
+systems on architectures supported by GCC. This version has been
+tested successfully on the following architectures:
 
 * amd64
 * arm64
@@ -60,6 +58,10 @@ and the following operating systems:
 
 Use WSL to run Gforth on Windows.
 
+### Build status
+
+[![pipeline status](https://gitlab.com/forthy42/gforth/badges/master/pipeline.svg)](https://gitlab.com/forthy42/gforth/commits/master)
+[![pipeline status](https://git.net2o.de/bernd/gforth/badges/master/pipeline.svg)](https://git.net2o.de/bernd/gforth/commits/master)
 
 ## Installation
 
@@ -124,6 +126,7 @@ __ANS Forth implementations of Gforth extensions:__
 __C-Bindings:__
 
     unix/*.fs
+
 
 ## Support
 
